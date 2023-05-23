@@ -1,0 +1,10 @@
+{% extends "../base.html" %}
+
+{% block content %} 
+    <ul>
+        <li>Nombre del alumno: {{student.first_name}}</li>
+        <li>Apellido del alumno: {{student.last_name}}</li>
+        <li>Fecha de nacimiento: {{student.born_date}}</li>
+        <li>Id del aula a la que pertenece: {{student.classroom_id}}</li>
+    </ul>
+{% endblock content %}

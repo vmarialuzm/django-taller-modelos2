@@ -1,0 +1,14 @@
+{% extends "../base.html" %}
+
+{% block content %}
+
+<p>La numeración para {{name}} es la siguiente:</p>
+
+<ul>
+    {% for numero in lista_numeros %}
+    <li>{{ numero }}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock content %}
