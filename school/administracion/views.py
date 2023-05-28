@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect,render
 from .models import ClassRoom,Student
 from django.views.generic import TemplateView,FormView,View
@@ -63,3 +64,35 @@ def obtenerStudent(request,first_name):
         "student":student
     }
     return render(request,"administracion/student.html",context)
+
+#----------------------TEMPLATES----------------------
+
+class NoTemplate(View):
+    def get(self,request):
+        response="""
+            <html>
+                <body>
+                    <p>Soy NoTemplate</p>
+                </body>
+            </html>
+        """
+
+        return HttpResponse(response)
+    
+class TemplateExample(View):
+    def get(self,request):
+        context={
+            'title':'harry potter',
+            'lista': [1,2,3,4,5],
+            'diccionario':{
+                'name':'marcos',
+                'last_name':'alvarez'
+            }
+        }
+
+        return render(request,'administracion/templateexample.html',context)
+
+class Otro(View):
+    def get(self,request):
+        return render(request,'administracion/otro.html')
+    

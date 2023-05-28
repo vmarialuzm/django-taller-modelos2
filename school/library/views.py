@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.views.generic.list import ListView
 from .models import Book
 import urllib.request
 import json
@@ -36,3 +37,14 @@ class BookView(View):
                 Book.objects.create(**book)
 
         return render(request,"index.html")
+
+#---------------------------------------------------
+
+class BookList(ListView):
+    model = Book
+    template_name = 'booklist.html'
+
+class BootstrapEj(View):
+    def get(self, request):
+        return render(request,'ejemplo_bootstrap.html')
+    

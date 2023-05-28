@@ -1,0 +1,33 @@
+{% extends "baselibrary.html" %}
+
+{% block title %}
+    <title>Soy BookList</title>
+{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for object in object_list %}
+            <div style="background-color: {% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}">
+                {% filter upper %}
+                    {% if object.language_code == 'eng' or object.language_code == 'eng-US' or object.language_code == 'eng-CA' or object.language_code == 'eng-GB' %}
+                        <li>Languages: 🇺🇸 🇬🇧 ({{ object.language_code }})</li>
+                    {% endif %}
+                    <li>📖 {{ object.title }}</li>
+                {% endfilter %}
+                <li>Authors: {{ object.authors }}</li>
+                {% if object.authors|length <= 30 %}
+                    <li>Tamaño del autor es: {{ object.authors|length }}</li>
+                {% endif %}
+                {% if object.publisher|length <= 20 %}
+                    <li>Publisher: {{ object.publisher}}</li>
+                {% endif %}    
+                {% if object.text_reviews_count > 10 %}
+                    <li>Reviews: {{ object.text_reviews_count }}</li>
+                {% endif %}
+            </div>
+            <hr>
+            {% empty %}
+            <li>No hay libros para mostrar</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
