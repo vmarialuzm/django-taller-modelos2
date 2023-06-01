@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'administracion.apps.AdministracionConfig',
     'library.apps.LibraryConfig',
     'users.apps.UsersConfig',
+    'celery',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #Podemos modificar a donde ira el login y tambien vamos a definir quien es login
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = "index"
+
+#Celery settings
+CELERY_BROKER_URL = "redis://default:hwH7DdLgXjS2RTWegRMlX6aDLyCFaGHA@redis-16914.c73.us-east-1-2.ec2.cloud.redislabs.com:16914"
+CELERY_RESULT_BACKEND = "redis://default:hwH7DdLgXjS2RTWegRMlX6aDLyCFaGHA@redis-16914.c73.us-east-1-2.ec2.cloud.redislabs.com:16914"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "America/Lima"
