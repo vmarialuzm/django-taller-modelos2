@@ -1,7 +1,10 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.views import View
 from django.views.generic.list import ListView
+from .forms import InputForm
 from .models import Book
+from .tasks import send_book
 import urllib.request
 import json
 import datetime
@@ -47,4 +50,26 @@ class BookList(ListView):
 class BootstrapEj(View):
     def get(self, request):
         return render(request,'ejemplo_bootstrap.html')
+    
+#---------------------------------------------------
+
+def select_book(request,id):
+    book = Book.objects.get(id=id)
+    request.session["authors"] = book.authors
+    request.session["id"] = id
+
+    context = {
+        "book" : book,
+        "form" : InputForm
+    }
+
+    if request.method == "POST":
+        form = InputForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            email = form.cleaned_data["email"]
+            send_book.delay(name,email)
+            return HttpResponse(f"Nombre: {name} \n Email: {email}")
+
+    return render(request,"one-book.html",context)
     
