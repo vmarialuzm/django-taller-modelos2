@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views import View
-from django.views.generic.list import ListView
+from django.views.generic import View,ListView
 from .forms import InputForm
 from .models import Book
 from .tasks import send_book
@@ -72,4 +71,10 @@ def select_book(request,id):
             return HttpResponse(f"Nombre: {name} \n Email: {email}")
 
     return render(request,"one-book.html",context)
-    
+
+#---------------------------------------------------
+
+class BookListView(ListView):
+    model = Book
+    template_name = "booklist.html"
+    paginate_by = 20

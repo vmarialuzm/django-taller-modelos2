@@ -1,33 +1,28 @@
-{% extends "baselibrary.html" %}
+{% extends "baselibrary.html" %} {% block content %}
 
-{% block title %}
-    <title>Soy BookList</title>
-{% endblock %}
+<div class="mt-5">
+  <ul>
+    {% for book in object_list %}
+    <li>{{ book.title }}</li>
+    {% endfor %}
+  </ul>
+</div>
 
-{% block content %}
-    <ul>
-        {% for object in object_list %}
-            <div style="background-color: {% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}">
-                {% filter upper %}
-                    {% if object.language_code == 'eng' or object.language_code == 'eng-US' or object.language_code == 'eng-CA' or object.language_code == 'eng-GB' %}
-                        <li>Languages: 🇺🇸 🇬🇧 ({{ object.language_code }})</li>
-                    {% endif %}
-                    <li>📖 {{ object.title }}</li>
-                {% endfilter %}
-                <li>Authors: {{ object.authors }}</li>
-                {% if object.authors|length <= 30 %}
-                    <li>Tamaño del autor es: {{ object.authors|length }}</li>
-                {% endif %}
-                {% if object.publisher|length <= 20 %}
-                    <li>Publisher: {{ object.publisher}}</li>
-                {% endif %}    
-                {% if object.text_reviews_count > 10 %}
-                    <li>Reviews: {{ object.text_reviews_count }}</li>
-                {% endif %}
-            </div>
-            <hr>
-            {% empty %}
-            <li>No hay libros para mostrar</li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; Primera</a>
+    <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    {% endif %}
+
+    <span class="current">
+      Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Último &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock content %}
